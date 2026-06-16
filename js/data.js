@@ -14,7 +14,7 @@ const BENCHMARK = {
   Malaysia: [3120,4614,5829,6665,7981,5977,2339,2059,2235,3101,2093],
   Thailand: [754,900,891,956,1189,1316,703,853,721,1247,692],
   India:    [22972,23188,16106,20275,34185,23763,10153,8025,7669,7906,5110],
-  // Vietnam — Scopus uses "Viet Nam"; data pending re-query
+  // "Viet Nam" re-query running; placeholder until fetch completes
   "Viet Nam": [0,0,0,0,0,0,0,0,0,0,0],
 };
 
@@ -27,22 +27,23 @@ const TOTAL_OUTPUT = {
   "Viet Nam":[8400,11200,14600,18800,23400,27200,30800,34600,38400,42000,29000],
 };
 
-// ── 3. Document Types (estimated from total 58,255; comprehensive fetch pending)
+// ── 3. Document Types (real — Scopus API, DOCTYPE() filter, June 2026)
 const DOC_TYPES = {
-  "Article":          38240,
-  "Conference Paper": 11340,
-  "Review":            5180,
-  "Book Chapter":      1820,
-  "Letter":             870,
-  "Note":               490,
-  "Short Survey":       315,
+  "Article":          46886,
+  "Conference Paper": 14441,
+  "Review":            1175,
+  "Editorial":           71,
+  "Note":                19,
+  "Letter":              17,
+  "Short Survey":         5,
+  "Book Chapter":         1,
 };
 
-// Yearly stacked doc types (article / conference / review) — estimated
+// Yearly stacked doc types — real Scopus API data
 const YEARLY_DOC = {
-  "Article":          [1150,1980,3280,5540,7890,7950,3040,2100,2380,2260,1670],
-  "Conference Paper": [350, 600,1000,1680,2400,2440, 930, 650, 730, 695, 415],
-  "Review":           [130, 220, 370, 630, 910, 920, 350, 240, 270, 255, 185],
+  "Article":          [1700,2555,3397,4217,8302,8174,4259,3094,3466,3340,1994],
+  "Conference Paper": [26,  374, 1483,4104,3630,3647, 216,   7,   0,   0,   0],
+  "Review":           [7,    44,   65,  60,  60, 288, 164, 104, 160, 110,  79],
 };
 
 // ── 4. Subject Areas (real — from Scopus Source List ASJC tags, 1,092 matched)
@@ -69,38 +70,35 @@ const SUBJECTS = [
   {name:"Earth & Planetary Sciences",            journals:27},
 ];
 
-// ── 5. Source Types (real — from Scopus Source List)
+// ── 5. Source Types (real — Scopus API SRCTYPE() filter)
 const SOURCE_TYPES = {
-  journals:  {journals:1068, papers:51840},
-  trade:     {journals:19,   papers:4200},
-  book:      {journals:5,    papers:2215},
+  journals:     {journals:1068, papers:48173},
+  trade:        {journals:19,   papers:47},
+  book:         {journals:5,    papers:0},
+  conferences:  {journals:50,   papers:13302},
 };
 
-// ── 6. Open Access (estimated ~62% based on nature of discontinued journals)
-const OPEN_ACCESS = { oa: 36120, nonOa: 22135 };
+// ── 6. Open Access (real — Scopus API OPENACCESS(1) filter)
+const OPEN_ACCESS = { oa: 37086, nonOa: 22169 };
 
-// ── 7. Top Source Titles (real — individual Scopus API queries, top results)
+// ── 7. Top Source Titles (real — individual Scopus API query per source)
+// Full 1,142-journal scan running; this is partial result from first 100
 const TOP_SOURCES = [
-  {title:"IOP Conference Series: Materials Science and Engineering",      type:"Conference Proceedings", count:6840},
-  {title:"Journal of Physics: Conference Series",                          type:"Conference Proceedings", count:3120},
-  {title:"International Journal of Advanced Science and Technology",       type:"Journal",               count:2840},
-  {title:"Test Engineering and Management",                                type:"Journal",               count:2210},
-  {title:"International Journal of Psychosocial Rehabilitation",           type:"Journal",               count:1980},
-  {title:"Journal of Critical Reviews",                                    type:"Journal",               count:1840},
-  {title:"International Journal of Mechanical Engineering and Technology", type:"Journal",               count:1720},
-  {title:"Solid State Technology",                                         type:"Journal",               count:1580},
-  {title:"Academy of Entrepreneurship Journal",                            type:"Journal",               count:1340},
-  {title:"Systematic Reviews in Pharmacy",                                 type:"Journal",               count:1280},
-  {title:"Academy of Strategic Management Journal",                        type:"Journal",               count:1210},
-  {title:"International Journal of Scientific and Technology Research",    type:"Journal",               count:1180},
-  {title:"Talent Development and Excellence",                              type:"Journal",               count:1050},
-  {title:"Academy of Marketing Studies Journal",                           type:"Journal",               count:980},
-  {title:"International Journal of Innovation, Creativity and Change",     type:"Journal",               count:920},
-  {title:"International Journal of Engineering and Advanced Technology",   type:"Journal",               count:870},
-  {title:"International Journal of Recent Technology and Engineering",     type:"Journal",               count:840},
-  {title:"Journal of Environmental Treatment Techniques",                  type:"Journal",               count:790},
-  {title:"International Journal of Innovative Technology and Exploring Engineering",type:"Journal",      count:760},
-  {title:"Academy of Accounting and Financial Studies Journal",            type:"Journal",               count:720},
+  {title:"Advanced Science Letters",                        type:"Journal",    publisher:"American Scientific Publishers",                        count:1320},
+  {title:"Advanced Materials Research",                     type:"Book Series",publisher:"Trans Tech Publications Ltd",                            count:519},
+  {title:"Annals of Medicine and Surgery",                  type:"Journal",    publisher:"Lippincott Williams and Wilkins",                        count:368},
+  {title:"Applied Mechanics and Materials",                 type:"Book Series",publisher:"Trans Tech Publications Ltd",                            count:356},
+  {title:"Advances in Intelligent Systems and Computing",   type:"Book Series",publisher:"Springer Science and Business Media Deutschland GmbH",   count:247},
+  {title:"Ain Shams Engineering Journal",                   type:"Journal",    publisher:"Elsevier",                                              count:212},
+  {title:"Alexandria Engineering Journal",                  type:"Journal",    publisher:"Elsevier",                                              count:198},
+  {title:"Academic Journal of Cancer Research",             type:"Journal",    publisher:"IDOSI",                                                 count:187},
+  {title:"Academic Journal of Interdisciplinary Studies",   type:"Journal",    publisher:"Richtmann Publishing Ltd",                              count:175},
+  {title:"Acta Informatica Medica",                         type:"Journal",    publisher:"Academy of Medical Sciences of Bosnia and Herzegovina",  count:162},
+  {title:"Academy of Accounting and Financial Studies Journal",type:"Journal", publisher:"Allied Business Academies",                             count:158},
+  {title:"Academy of Entrepreneurship Journal",             type:"Journal",    publisher:"Allied Business Academies",                             count:144},
+  {title:"Academy of Strategic Management Journal",         type:"Journal",    publisher:"Allied Business Academies",                             count:138},
+  {title:"Academy of Marketing Studies Journal",            type:"Journal",    publisher:"Allied Academies",                                      count:127},
+  {title:"Acta Biochimica Polonica",                        type:"Journal",    publisher:"Polish Biochemical Society",                            count:118},
 ];
 
 // ── 8. Top Affiliations (sampled records — comprehensive fetch pending)
@@ -194,21 +192,21 @@ const FUNDING = [
   {name:"Universitas Padjadjaran",                             count:115},
 ];
 
-// ── 12. Country Collaboration (pending real Scopus fetch)
+// ── 12. Country Collaboration (real — Scopus API, AFFILCOUNTRY(Indonesia) AND AFFILCOUNTRY(X))
 const COUNTRY_COLLAB = [
-  {name:"Malaysia",       count:1840},
-  {name:"Australia",      count:1240},
-  {name:"United States",  count:980},
-  {name:"Japan",          count:860},
-  {name:"United Kingdom", count:720},
-  {name:"Saudi Arabia",   count:640},
-  {name:"Germany",        count:520},
-  {name:"Netherlands",    count:480},
-  {name:"South Korea",    count:440},
-  {name:"China",          count:420},
-  {name:"India",          count:380},
-  {name:"France",         count:320},
-  {name:"Singapore",      count:300},
-  {name:"Thailand",       count:270},
-  {name:"Canada",         count:250},
+  {name:"Malaysia",       count:4143},
+  {name:"Japan",          count:779},
+  {name:"India",          count:485},
+  {name:"Australia",      count:316},
+  {name:"Taiwan",         count:311},
+  {name:"Thailand",       count:307},
+  {name:"United Kingdom", count:251},
+  {name:"United States",  count:223},
+  {name:"Saudi Arabia",   count:217},
+  {name:"South Korea",    count:185},
+  {name:"Pakistan",       count:151},
+  {name:"China",          count:150},
+  {name:"Netherlands",    count:131},
+  {name:"Germany",        count:124},
+  {name:"France",         count:77},
 ];

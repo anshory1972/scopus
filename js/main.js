@@ -225,20 +225,21 @@ new Chart(document.getElementById('sourceBar'),{
 // ═══════════════════════════════════════════════════════════════════════════════
 // 6. SOURCE TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
-const stLabels = ['Journals','Trade Journals','Book Series'];
+const stLabels  = ['Journal','Conference Proceedings','Trade Journal'];
+const stPapers  = [SOURCE_TYPES.journals.papers, SOURCE_TYPES.conferences.papers, SOURCE_TYPES.trade.papers];
+const stJournals= [SOURCE_TYPES.journals.journals,SOURCE_TYPES.conferences.journals,SOURCE_TYPES.trade.journals];
+const stColors  = ['#3b82f6','#7c3aed','#f59e0b'];
 new Chart(document.getElementById('srcTypePie'),{
   type:'doughnut',
   data:{labels:stLabels,
-    datasets:[{data:[SOURCE_TYPES.journals.papers,SOURCE_TYPES.trade.papers,SOURCE_TYPES.book.papers],
-      backgroundColor:['#3b82f6','#f59e0b','#8b5cf6'],borderWidth:2,borderColor:'#fff'}]},
+    datasets:[{data:stPapers,backgroundColor:stColors,borderWidth:2,borderColor:'#fff'}]},
   options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:12}},
     tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed.toLocaleString()} papers`}}}}
 });
 new Chart(document.getElementById('srcTypeCount'),{
   type:'bar',
   data:{labels:stLabels,
-    datasets:[{data:[SOURCE_TYPES.journals.journals,SOURCE_TYPES.trade.journals,SOURCE_TYPES.book.journals],
-      backgroundColor:['#3b82f6','#f59e0b','#8b5cf6'],borderRadius:6}]},
+    datasets:[{data:stJournals,backgroundColor:stColors,borderRadius:6}]},
   options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.y} sources`}}},
     scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f5f9'}}}}
 });
