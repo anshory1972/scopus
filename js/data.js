@@ -98,3 +98,13 @@ const MOCK = {
     values: [48, 32, 20]
   }
 };
+
+// ── LIVE DATA: Papers in discontinued journals by Indonesian authors ──────────
+// Source: Scopus Search API, queried June 2026 against 1,142 discontinued
+// journal source IDs (Scopus discontinued list May 2026).
+const DISCONTINUED = {
+  years:  [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  counts: [1740, 2978, 4960, 8396, 12018, 12127, 4651, 3221, 3635, 3452, 2077],
+  // Total Indonesian output per year (mock — replace with live API when available)
+  totalOutput: [19450, 24130, 30280, 37560, 44820, 52380, 61240, 71890, 80920, 91200, 62000]
+};

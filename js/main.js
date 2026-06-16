@@ -313,6 +313,128 @@ MOCK.journals.forEach((j, i) => {
   journalTbody.appendChild(tr);
 });
 
+// ── Discontinued Journals Charts ─────────────────────────────────────────────
+const discTotal = DISCONTINUED.counts.reduce((a, b) => a + b, 0);
+const discPeak  = Math.max(...DISCONTINUED.counts);
+const disc2024  = DISCONTINUED.counts[DISCONTINUED.years.indexOf(2024)];
+const discDrop  = Math.round((discPeak - disc2024) / discPeak * 100);
+
+document.getElementById('disc-total').textContent = discTotal.toLocaleString();
+document.getElementById('disc-drop').textContent  = `−${discDrop}%`;
+
+// Bar colours: red for peak years, amber for others, grey for post-peak
+const barColors = DISCONTINUED.counts.map((v, i) => {
+  if (v === discPeak || (i > 0 && DISCONTINUED.counts[i-1] === discPeak)) return '#dc2626';
+  if (v > 8000) return '#f97316';
+  if (DISCONTINUED.years[i] >= 2021) return '#94a3b8';
+  return '#3b82f6';
+});
+
+new Chart(document.getElementById('discTrendChart'), {
+  type: 'bar',
+  data: {
+    labels: DISCONTINUED.years,
+    datasets: [{
+      label: 'Papers in discontinued journals',
+      data: DISCONTINUED.counts,
+      backgroundColor: barColors,
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.parsed.y.toLocaleString()} papers`,
+          afterLabel: ctx => {
+            const i = ctx.dataIndex;
+            if (i > 0) {
+              const prev = DISCONTINUED.counts[i - 1];
+              const chg  = Math.round((ctx.parsed.y - prev) / prev * 100);
+              return `YoY: ${chg > 0 ? '+' : ''}${chg}%`;
+            }
+            return '';
+          }
+        }
+      },
+      annotation: {}
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: { callback: v => v.toLocaleString() }
+      }
+    }
+  }
+});
+
+// YoY Change chart
+const yoyChanges = DISCONTINUED.counts.map((v, i) => {
+  if (i === 0) return null;
+  return Math.round((v - DISCONTINUED.counts[i-1]) / DISCONTINUED.counts[i-1] * 100);
+});
+
+new Chart(document.getElementById('discChangeChart'), {
+  type: 'bar',
+  data: {
+    labels: DISCONTINUED.years,
+    datasets: [{
+      label: 'YoY Change %',
+      data: yoyChanges,
+      backgroundColor: yoyChanges.map(v => v === null ? 'transparent' : v >= 0 ? '#3b82f6' : '#ef4444'),
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.parsed.y !== null ? ` ${ctx.parsed.y > 0 ? '+' : ''}${ctx.parsed.y}%` : '' } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '%' } }
+    }
+  }
+});
+
+// Share of total output
+const shareData = DISCONTINUED.counts.map((v, i) =>
+  parseFloat((v / DISCONTINUED.totalOutput[i] * 100).toFixed(1))
+);
+
+new Chart(document.getElementById('discShareChart'), {
+  type: 'line',
+  data: {
+    labels: DISCONTINUED.years,
+    datasets: [{
+      label: '% of total Indonesian output',
+      data: shareData,
+      borderColor: '#7c3aed',
+      backgroundColor: 'rgba(124,58,237,.1)',
+      fill: true,
+      tension: 0.4,
+      borderWidth: 2.5,
+      pointRadius: 5,
+      pointBackgroundColor: shareData.map(v => v === Math.max(...shareData) ? '#dc2626' : '#7c3aed'),
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y}% of total output` } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '%' }, min: 0 }
+    }
+  }
+});
+
 // ── Table Filter ──────────────────────────────────────────────────────────────
 function filterTable(tableId, query) {
   const rows = document.querySelectorAll(`#${tableId} tbody tr`);

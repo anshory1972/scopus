@@ -332,6 +332,28 @@ body {
 .api-status.ok    { color: var(--green); }
 .api-status.error { color: #dc2626; }
 
+/* ===== LIVE BADGE ===== */
+.live-badge {
+  font-size: .75rem;
+  color: #16a34a;
+  font-weight: 600;
+  background: #dcfce7;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ===== INSIGHT BOX ===== */
+.insight-box {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px;
+  font-size: .88rem;
+  color: var(--gray-800);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
