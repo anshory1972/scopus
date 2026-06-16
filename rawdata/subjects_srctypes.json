@@ -1,0 +1,36 @@
+{
+  "sourceTypes": {
+    "Journal": 1068,
+    "Trade Journal": 19,
+    "Book Series": 5
+  },
+  "subjects": {
+    "Medicine": 288,
+    "Social Sciences": 205,
+    "Engineering": 171,
+    "Computer Science": 141,
+    "Biochemistry, Genetics and Molecular Biology": 126,
+    "Agricultural and Biological Sciences": 109,
+    "Environmental Science": 88,
+    "Pharmacology, Toxicology and Pharmaceutics": 88,
+    "Business, Management and Accounting": 82,
+    "Mathematics": 76,
+    "Arts and Humanities": 72,
+    "Economics, Econometrics and Finance": 65,
+    "Materials Science": 50,
+    "Chemistry": 43,
+    "Chemical Engineering": 40,
+    "Psychology": 40,
+    "Energy": 30,
+    "Immunology and Microbiology": 29,
+    "Decision Sciences": 28,
+    "Earth and Planetary Sciences": 27,
+    "Nursing": 24,
+    "Physics and Astronomy": 24,
+    "Health Professions": 24,
+    "General": 21,
+    "Veterinary": 15,
+    "Neuroscience": 13,
+    "Dentistry": 6
+  }
+}

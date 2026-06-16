@@ -1,192 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scopus Discontinued Journals — Indonesia Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Indonesia in Scopus Discontinued Journals — Analytics Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
-  <!-- ── HERO ───────────────────────────────────────────────────── -->
-  <div class="hero">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-eyebrow">Scopus Journal Quality Monitor · May 2026</div>
-        <h1>Indonesian Research in<br>Discontinued Scopus Journals</h1>
-        <p>Tracking papers published by Indonesian-affiliated authors in <strong>1,142 journals</strong>
-           removed from Scopus indexing — benchmarked against regional peers.</p>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hs-val">1,142</span>
-          <span class="hs-lbl">Discontinued<br>Journals</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hs-val">58,255</span>
-          <span class="hs-lbl">Indonesian<br>Papers Affected</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hs-val">2015–2025</span>
-          <span class="hs-lbl">Period<br>Analysed</span>
-        </div>
-      </div>
+<!-- ═══════════════════════ HERO ═══════════════════════════════════════════ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="hero-badge">Scopus Journal Quality Monitor · May 2026</div>
+      <span class="live-pill">● Live Scopus API Data</span>
+    </div>
+    <h1>Indonesian Research Exposure to<br>Scopus-Discontinued Journals</h1>
+    <p class="hero-sub">A comprehensive analysis of papers published by Indonesian-affiliated authors in
+      <strong>1,142 journals</strong> removed from Scopus indexing — across years, subjects,
+      document types, institutions, authors, keywords, funding, open access, and regional peers.</p>
+    <div class="hero-kpis">
+      <div class="hk"><span class="hk-v">1,142</span><span class="hk-l">Discontinued<br>Journals</span></div>
+      <div class="hk-div"></div>
+      <div class="hk"><span class="hk-v">58,255</span><span class="hk-l">Papers<br>Affected (ID)</span></div>
+      <div class="hk-div"></div>
+      <div class="hk"><span class="hk-v">2020</span><span class="hk-l">Peak<br>Year</span></div>
+      <div class="hk-div"></div>
+      <div class="hk"><span class="hk-v">−72%</span><span class="hk-l">Drop to<br>2024</span></div>
+      <div class="hk-div"></div>
+      <div class="hk"><span class="hk-v">2015–2025</span><span class="hk-l">Period<br>Analysed</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ NAV ════════════════════════════════════════════ -->
+<nav class="subnav" id="subnav">
+  <div class="wrap subnav-inner">
+    <a href="#s-trend"     class="sn active">Trend</a>
+    <a href="#s-benchmark" class="sn">Benchmarking</a>
+    <a href="#s-doctype"   class="sn">Doc Types</a>
+    <a href="#s-subject"   class="sn">Subject Areas</a>
+    <a href="#s-source"    class="sn">Source Titles</a>
+    <a href="#s-srctype"   class="sn">Source Types</a>
+    <a href="#s-oa"        class="sn">Open Access</a>
+    <a href="#s-affil"     class="sn">Affiliations</a>
+    <a href="#s-author"    class="sn">Authors</a>
+    <a href="#s-keyword"   class="sn">Keywords</a>
+    <a href="#s-funding"   class="sn">Funding</a>
+    <a href="#s-country"   class="sn">Collaboration</a>
+  </div>
+</nav>
+
+<div class="wrap body-wrap">
+
+  <!-- ── 1. TREND ─────────────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-trend">
+    <span class="sec-num">01</span>
+    <div><h2>Publication Trend (2015–2025)</h2>
+    <p>Annual count of Indonesian-authored papers in journals that Scopus later discontinued</p></div>
+  </div>
+  <div class="kpi-strip">
+    <div class="ks-card red"><div class="ks-v">12,127</div><div class="ks-l">Peak (2020)</div></div>
+    <div class="ks-card blue"><div class="ks-v">6×</div><div class="ks-l">Growth 2015→2020</div></div>
+    <div class="ks-card amber"><div class="ks-v">−62%</div><div class="ks-l">Drop 2020→2021</div></div>
+    <div class="ks-card gray"><div class="ks-v">~3,400</div><div class="ks-l">Stabilised (2022–24)</div></div>
+  </div>
+  <div class="card">
+    <div class="ch">
+      <div><h3>Annual Papers in Discontinued Journals — Indonesia</h3>
+           <p class="cs">Red = peak · Blue = growth phase · Grey = post-discontinuation</p></div>
+    </div>
+    <canvas id="trendChart" height="60"></canvas>
+  </div>
+  <div class="two-col mt">
+    <div class="card">
+      <div class="ch"><div><h3>Year-on-Year Change (%)</h3></div></div>
+      <canvas id="yoyChart" height="160"></canvas>
+    </div>
+    <div class="card">
+      <div class="ch"><div><h3>Stacked by Document Type (Article / Conference / Review)</h3></div></div>
+      <canvas id="stackedDocYear" height="160"></canvas>
     </div>
   </div>
 
-  <div class="page">
-
-    <!-- ── INDONESIA SPOTLIGHT ────────────────────────────────────── -->
-    <div class="section-label">Indonesia Spotlight</div>
-    <div class="kpi-row">
-      <div class="kpi-card accent">
-        <div class="kpi-icon">📄</div>
-        <div class="kpi-body">
-          <div class="kpi-val">58,255</div>
-          <div class="kpi-lbl">Total Papers (2015–2025)</div>
-          <div class="kpi-sub">in discontinued Scopus journals</div>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">📈</div>
-        <div class="kpi-body">
-          <div class="kpi-val">12,127</div>
-          <div class="kpi-lbl">Peak Year Output</div>
-          <div class="kpi-sub">2020 — highest annual count</div>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">📉</div>
-        <div class="kpi-body">
-          <div class="kpi-val">−72%</div>
-          <div class="kpi-lbl">Peak-to-2024 Drop</div>
-          <div class="kpi-sub">from 12,127 → 3,452 papers</div>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">⚠️</div>
-        <div class="kpi-body">
-          <div class="kpi-val">~23%</div>
-          <div class="kpi-lbl">Share at Peak (2020)</div>
-          <div class="kpi-sub">of total Indonesian Scopus output</div>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">📆</div>
-        <div class="kpi-body">
-          <div class="kpi-val">6× growth</div>
-          <div class="kpi-lbl">2015 → 2020</div>
-          <div class="kpi-sub">from 1,740 to 12,127 papers</div>
-        </div>
-      </div>
+  <!-- ── 2. BENCHMARKING ─────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-benchmark">
+    <span class="sec-num">02</span>
+    <div><h2>Regional Benchmarking</h2>
+    <p>Indonesia vs Malaysia, Thailand, India, Vietnam — same discontinued journal list applied</p></div>
+  </div>
+  <div class="card">
+    <div class="ch">
+      <div><h3>Papers in Discontinued Journals — Country Comparison</h3>
+           <p class="cs">Indonesia highlighted · dashed = peer countries</p></div>
+      <div class="cleg" id="bench-leg"></div>
     </div>
+    <canvas id="benchLine" height="60"></canvas>
+  </div>
+  <div class="card mt">
+    <div class="ch"><div><h3>Share of Each Country's Total Scopus Output Affected (%)</h3>
+    <p class="cs">What fraction of each country's annual Scopus papers were in journals later discontinued</p></div></div>
+    <canvas id="shareLine" height="60"></canvas>
+  </div>
 
-    <!-- ── COUNTRY BENCHMARK LINE CHART ──────────────────────────── -->
-    <div class="section-label">Regional Benchmarking</div>
+  <!-- ── 3. DOCUMENT TYPES ─────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-doctype">
+    <span class="sec-num">03</span>
+    <div><h2>Document Types</h2>
+    <p>Breakdown of paper types published in discontinued journals by Indonesian authors</p></div>
+  </div>
+  <div class="two-col">
     <div class="card">
-      <div class="card-header">
-        <div>
-          <h2>Papers in Discontinued Journals — Country Comparison (2015–2025)</h2>
-          <p class="card-sub">Indonesia vs regional peers · Indonesian line highlighted</p>
-        </div>
-        <div class="country-legend" id="bench-legend"></div>
-      </div>
-      <canvas id="benchChart" height="55"></canvas>
+      <div class="ch"><h3>Distribution by Document Type</h3></div>
+      <canvas id="docDoughnut" height="220"></canvas>
     </div>
-
-    <!-- ── TWO COLUMN ─────────────────────────────────────────────── -->
-    <div class="two-col">
-
-      <!-- Indonesia bar -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h3>Indonesia — Annual Count</h3>
-            <p class="card-sub">Papers in discontinued journals by year</p>
-          </div>
-        </div>
-        <canvas id="indoBar" height="160"></canvas>
-      </div>
-
-      <!-- YoY change -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h3>Indonesia — Year-on-Year Change</h3>
-            <p class="card-sub">Percentage change from prior year</p>
-          </div>
-        </div>
-        <canvas id="yoyChart" height="160"></canvas>
-      </div>
-
-    </div>
-
-    <!-- ── SHARE OF TOTAL OUTPUT ──────────────────────────────────── -->
     <div class="card">
-      <div class="card-header">
-        <div>
-          <h2>Share of Each Country's Total Scopus Output in Discontinued Journals (%)</h2>
-          <p class="card-sub">How large a fraction of each country's annual Scopus papers landed in journals later discontinued</p>
-        </div>
-      </div>
-      <canvas id="shareChart" height="55"></canvas>
+      <div class="ch"><h3>Count by Document Type</h3></div>
+      <canvas id="docBar" height="220"></canvas>
     </div>
+  </div>
 
-    <!-- ── INSIGHT ────────────────────────────────────────────────── -->
-    <div class="insight-grid">
-      <div class="insight-card red">
-        <div class="insight-icon">🚨</div>
-        <h4>Rapid Concentration in At-Risk Journals</h4>
-        <p>Between 2015 and 2020, Indonesian authors published <strong>6× more</strong> papers in journals
-           that Scopus would later discontinue, growing from 1,740 to 12,127 annually. At peak, these
-           journals absorbed nearly <strong>1-in-4</strong> Indonesian Scopus papers.</p>
-      </div>
-      <div class="insight-card amber">
-        <div class="insight-icon">📊</div>
-        <h4>The 2021 Discontinuation Cliff</h4>
-        <p>Output in discontinued journals dropped <strong>62% in a single year</strong> (2020→2021),
-           from 12,127 to 4,651 papers. This cliff directly reflects Scopus's mass discontinuation
-           wave, instantly removing years of Indonesian research from the indexed literature.</p>
-      </div>
-      <div class="insight-card blue">
-        <div class="insight-icon">🌏</div>
-        <h4>Regional Context</h4>
-        <p>Indonesia's exposure to discontinued journals is significantly <strong>higher than Malaysia
-           and Thailand</strong> relative to total output, and comparable to Vietnam in share terms,
-           suggesting a systemic preference for quantity over journal quality in the growth phase.</p>
-      </div>
-      <div class="insight-card green">
-        <div class="insight-icon">✅</div>
-        <h4>Post-2021 Recovery Signal</h4>
-        <p>Since 2021, the volume has stabilised at 3,000–4,000 papers per year — lower than peak but
-           showing a <strong>structural floor</strong>. This may indicate continued use of lower-tier
-           journals alongside broader institutional awareness of Scopus quality thresholds.</p>
-      </div>
+  <!-- ── 4. SUBJECT AREAS ─────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-subject">
+    <span class="sec-num">04</span>
+    <div><h2>Subject Areas</h2>
+    <p>ASJC classification of discontinued journals containing Indonesian papers</p></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h3>Number of Discontinued Journals per Subject Area</h3></div>
+    <canvas id="subjectBar" height="90"></canvas>
+  </div>
+
+  <!-- ── 5. SOURCE TITLES ──────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-source">
+    <span class="sec-num">05</span>
+    <div><h2>Source Titles</h2>
+    <p>Top discontinued journals/proceedings by Indonesian paper count</p></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h3>Top 20 Discontinued Sources — Indonesian Papers</h3></div>
+    <canvas id="sourceBar" height="120"></canvas>
+  </div>
+
+  <!-- ── 6. SOURCE TYPES ───────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-srctype">
+    <span class="sec-num">06</span>
+    <div><h2>Source Types</h2>
+    <p>Journal vs Conference Proceedings vs Book Series</p></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="ch"><h3>Papers by Source Type</h3></div>
+      <canvas id="srcTypePie" height="240"></canvas>
     </div>
-
-    <!-- ── METHODOLOGY ────────────────────────────────────────────── -->
-    <div class="method-box">
-      <strong>Data &amp; Methodology</strong>
-      <ul>
-        <li>Journal list: <em>Scopus Source List May 2026</em> — "Discontinued Titles" sheet (1,142 journals)</li>
-        <li>Query: <code>AFFILCOUNTRY({country}) AND SOURCE-ID({id1} OR {id2} OR …) AND PUBYEAR = {year}</code></li>
-        <li>API: Scopus Search API (Elsevier) · Fetched June 2026 · Batched in groups of 100 source IDs</li>
-        <li>Benchmark countries: Malaysia, Thailand, India, Vietnam — same source ID list applied</li>
-        <li>Share of output denominators: approximate annual Scopus country totals</li>
-      </ul>
+    <div class="card">
+      <div class="ch"><h3>Source Count by Type</h3></div>
+      <canvas id="srcTypeCount" height="240"></canvas>
     </div>
+  </div>
 
-    <footer>
-      Data: <strong>Scopus Search API</strong> (Elsevier) &bull;
-      Source list: Scopus May 2026 &bull;
-      <a href="https://dev.elsevier.com" target="_blank">dev.elsevier.com</a> &bull;
-      Dashboard: <a href="https://github.com/anshory1972/scopus" target="_blank">github.com/anshory1972/scopus</a>
-    </footer>
+  <!-- ── 7. OPEN ACCESS ────────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-oa">
+    <span class="sec-num">07</span>
+    <div><h2>Open Access Status</h2>
+    <p>OA vs subscription papers in discontinued journals</p></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="ch"><h3>Open Access vs Subscription</h3></div>
+      <canvas id="oaPie" height="240"></canvas>
+    </div>
+    <div class="card insight-oa">
+      <div class="oa-big" id="oa-pct">—</div>
+      <div class="oa-lbl">of papers are Open Access</div>
+      <p>Many predatory or low-quality journals that were later discontinued operated under an
+         open-access, author-pays model — a common vector for low-quality publishing.</p>
+    </div>
+  </div>
 
-  </div><!-- /page -->
+  <!-- ── 8. AFFILIATIONS ───────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-affil">
+    <span class="sec-num">08</span>
+    <div><h2>Author Affiliations</h2>
+    <p>Top Indonesian institutions whose researchers published in discontinued journals (sampled records)</p></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h3>Top 15 Affiliations by Paper Count (Sample)</h3></div>
+    <canvas id="affilBar" height="90"></canvas>
+  </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
+  <!-- ── 9. AUTHORS ────────────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-author">
+    <span class="sec-num">09</span>
+    <div><h2>Authors</h2>
+    <p>Most prolific Indonesian authors in discontinued journals (sampled records)</p></div>
+  </div>
+  <div class="card no-pad">
+    <table class="dtable" id="author-table">
+      <thead><tr><th>#</th><th>Author</th><th>Papers (sample)</th><th>Bar</th></tr></thead>
+      <tbody id="author-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- ── 10. KEYWORDS ──────────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-keyword">
+    <span class="sec-num">10</span>
+    <div><h2>Keywords</h2>
+    <p>Top author-supplied keywords from papers in discontinued journals</p></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="ch"><h3>Top 20 Keywords by Frequency</h3></div>
+      <canvas id="kwBar" height="200"></canvas>
+    </div>
+    <div class="card">
+      <div class="ch"><h3>Keyword Cloud</h3></div>
+      <div class="kwcloud" id="kwcloud"></div>
+    </div>
+  </div>
+
+  <!-- ── 11. FUNDING ───────────────────────────────────────────────────────── -->
+  <div class="sec-head" id="s-funding">
+    <span class="sec-num">11</span>
+    <div><h2>Funding Sponsors</h2>
+    <p>Top funding bodies acknowledged in papers published in discontinued journals</p></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h3>Top 15 Funding Sponsors</h3></div>
+    <canvas id="fundBar" height="90"></canvas>
+  </div>
+
+  <!-- ── 12. COUNTRY COLLABORATION ────────────────────────────────────────── -->
+  <div class="sec-head" id="s-country">
+    <span class="sec-num">12</span>
+    <div><h2>International Collaboration</h2>
+    <p>Co-authored papers between Indonesia and other countries in discontinued journals</p></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="ch"><h3>Top Collaborating Countries</h3></div>
+      <canvas id="countryBar" height="200"></canvas>
+    </div>
+    <div class="card">
+      <div class="ch"><h3>Collaboration Share</h3></div>
+      <canvas id="countryPie" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- ── METHODOLOGY ───────────────────────────────────────────────────────── -->
+  <div class="method-box">
+    <strong>Data &amp; Methodology</strong>
+    <ul>
+      <li><strong>Journal list:</strong> Scopus Source List May 2026, "Discontinued Titles" tab — 1,142 source IDs</li>
+      <li><strong>Search query:</strong> <code>AFFILCOUNTRY(Indonesia) AND SOURCE-ID({id1} OR … OR {id100}) AND PUBYEAR = {year}</code> — batched in groups of 100</li>
+      <li><strong>Doc types, OA, source types:</strong> targeted count queries via <code>DOCTYPE()</code>, <code>OPENACCESS()</code>, <code>SRCTYPE()</code> filters</li>
+      <li><strong>Affiliations, authors, keywords, funding:</strong> sampled from up to 5,000 records using <code>field=</code> projection</li>
+      <li><strong>Subject areas:</strong> derived from ASJC classification tags on discontinued source list</li>
+      <li><strong>Benchmark countries:</strong> same 1,142 source IDs applied with <code>AFFILCOUNTRY(Malaysia|Thailand|India|Vietnam)</code></li>
+      <li><strong>API:</strong> Scopus Search API (Elsevier) · Fetched June 2026 · <a href="https://dev.elsevier.com">dev.elsevier.com</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <span>Scopus discontinued journals dashboard · Indonesia ·
+    <a href="https://github.com/anshory1972/scopus">github.com/anshory1972/scopus</a></span>
+    <span>Data: Elsevier Scopus API · June 2026</span>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
