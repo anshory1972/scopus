@@ -3,80 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Indonesian Papers in Discontinued Scopus Journals</title>
+  <title>Scopus Discontinued Journals — Indonesia Dashboard</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <div class="page">
 
-    <header class="page-header">
-      <div class="header-text">
-        <h1>Indonesian Authors in Scopus-Discontinued Journals</h1>
-        <p>Papers published by Indonesian-affiliated authors in <strong>1,142 journals</strong> later discontinued by Scopus &mdash; based on the May 2026 discontinuation list</p>
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Scopus Journal Quality Monitor · May 2026</div>
+        <h1>Indonesian Research in<br>Discontinued Scopus Journals</h1>
+        <p>Tracking papers published by Indonesian-affiliated authors in <strong>1,142 journals</strong>
+           removed from Scopus indexing — benchmarked against regional peers.</p>
       </div>
-      <span class="live-badge">&#9679; Live Scopus Data</span>
-    </header>
-
-    <div class="kpi-row">
-      <div class="kpi-card kpi-orange">
-        <div class="kpi-value">1,142</div>
-        <div class="kpi-label">Discontinued Journals</div>
-        <div class="kpi-sub">Scopus May 2026 list</div>
-      </div>
-      <div class="kpi-card kpi-blue">
-        <div class="kpi-value">58,255</div>
-        <div class="kpi-label">Total Papers 2015&ndash;2025</div>
-        <div class="kpi-sub">Indonesian authors</div>
-      </div>
-      <div class="kpi-card kpi-red">
-        <div class="kpi-value">12,127</div>
-        <div class="kpi-label">Peak Year (2020)</div>
-        <div class="kpi-sub">highest annual count</div>
-      </div>
-      <div class="kpi-card kpi-green">
-        <div class="kpi-value">&minus;72%</div>
-        <div class="kpi-label">Drop: 2020 &rarr; 2024</div>
-        <div class="kpi-sub">effect of Scopus clean-up</div>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-header">
-        <h2>Annual Paper Count in Discontinued Journals</h2>
-        <div class="legend-row">
-          <span class="leg leg-blue">Growth phase</span>
-          <span class="leg leg-red">Peak</span>
-          <span class="leg leg-gray">Post-discontinuation</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hs-val">1,142</span>
+          <span class="hs-lbl">Discontinued<br>Journals</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hs-val">58,255</span>
+          <span class="hs-lbl">Indonesian<br>Papers Affected</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hs-val">2015–2025</span>
+          <span class="hs-lbl">Period<br>Analysed</span>
         </div>
       </div>
-      <canvas id="mainChart"></canvas>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- ── INDONESIA SPOTLIGHT ────────────────────────────────────── -->
+    <div class="section-label">Indonesia Spotlight</div>
+    <div class="kpi-row">
+      <div class="kpi-card accent">
+        <div class="kpi-icon">📄</div>
+        <div class="kpi-body">
+          <div class="kpi-val">58,255</div>
+          <div class="kpi-lbl">Total Papers (2015–2025)</div>
+          <div class="kpi-sub">in discontinued Scopus journals</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📈</div>
+        <div class="kpi-body">
+          <div class="kpi-val">12,127</div>
+          <div class="kpi-lbl">Peak Year Output</div>
+          <div class="kpi-sub">2020 — highest annual count</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📉</div>
+        <div class="kpi-body">
+          <div class="kpi-val">−72%</div>
+          <div class="kpi-lbl">Peak-to-2024 Drop</div>
+          <div class="kpi-sub">from 12,127 → 3,452 papers</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">⚠️</div>
+        <div class="kpi-body">
+          <div class="kpi-val">~23%</div>
+          <div class="kpi-lbl">Share at Peak (2020)</div>
+          <div class="kpi-sub">of total Indonesian Scopus output</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📆</div>
+        <div class="kpi-body">
+          <div class="kpi-val">6× growth</div>
+          <div class="kpi-lbl">2015 → 2020</div>
+          <div class="kpi-sub">from 1,740 to 12,127 papers</div>
+        </div>
+      </div>
     </div>
 
-    <div class="secondary-row">
-      <div class="chart-card">
-        <div class="chart-header"><h3>Year-on-Year Change (%)</h3></div>
-        <canvas id="yoyChart"></canvas>
+    <!-- ── COUNTRY BENCHMARK LINE CHART ──────────────────────────── -->
+    <div class="section-label">Regional Benchmarking</div>
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Papers in Discontinued Journals — Country Comparison (2015–2025)</h2>
+          <p class="card-sub">Indonesia vs regional peers · Indonesian line highlighted</p>
+        </div>
+        <div class="country-legend" id="bench-legend"></div>
       </div>
-      <div class="chart-card">
-        <div class="chart-header"><h3>Share of Total Indonesian Scopus Output</h3></div>
-        <canvas id="shareChart"></canvas>
+      <canvas id="benchChart" height="55"></canvas>
+    </div>
+
+    <!-- ── TWO COLUMN ─────────────────────────────────────────────── -->
+    <div class="two-col">
+
+      <!-- Indonesia bar -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Indonesia — Annual Count</h3>
+            <p class="card-sub">Papers in discontinued journals by year</p>
+          </div>
+        </div>
+        <canvas id="indoBar" height="160"></canvas>
+      </div>
+
+      <!-- YoY change -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Indonesia — Year-on-Year Change</h3>
+            <p class="card-sub">Percentage change from prior year</p>
+          </div>
+        </div>
+        <canvas id="yoyChart" height="160"></canvas>
+      </div>
+
+    </div>
+
+    <!-- ── SHARE OF TOTAL OUTPUT ──────────────────────────────────── -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Share of Each Country's Total Scopus Output in Discontinued Journals (%)</h2>
+          <p class="card-sub">How large a fraction of each country's annual Scopus papers landed in journals later discontinued</p>
+        </div>
+      </div>
+      <canvas id="shareChart" height="55"></canvas>
+    </div>
+
+    <!-- ── INSIGHT ────────────────────────────────────────────────── -->
+    <div class="insight-grid">
+      <div class="insight-card red">
+        <div class="insight-icon">🚨</div>
+        <h4>Rapid Concentration in At-Risk Journals</h4>
+        <p>Between 2015 and 2020, Indonesian authors published <strong>6× more</strong> papers in journals
+           that Scopus would later discontinue, growing from 1,740 to 12,127 annually. At peak, these
+           journals absorbed nearly <strong>1-in-4</strong> Indonesian Scopus papers.</p>
+      </div>
+      <div class="insight-card amber">
+        <div class="insight-icon">📊</div>
+        <h4>The 2021 Discontinuation Cliff</h4>
+        <p>Output in discontinued journals dropped <strong>62% in a single year</strong> (2020→2021),
+           from 12,127 to 4,651 papers. This cliff directly reflects Scopus's mass discontinuation
+           wave, instantly removing years of Indonesian research from the indexed literature.</p>
+      </div>
+      <div class="insight-card blue">
+        <div class="insight-icon">🌏</div>
+        <h4>Regional Context</h4>
+        <p>Indonesia's exposure to discontinued journals is significantly <strong>higher than Malaysia
+           and Thailand</strong> relative to total output, and comparable to Vietnam in share terms,
+           suggesting a systemic preference for quantity over journal quality in the growth phase.</p>
+      </div>
+      <div class="insight-card green">
+        <div class="insight-icon">✅</div>
+        <h4>Post-2021 Recovery Signal</h4>
+        <p>Since 2021, the volume has stabilised at 3,000–4,000 papers per year — lower than peak but
+           showing a <strong>structural floor</strong>. This may indicate continued use of lower-tier
+           journals alongside broader institutional awareness of Scopus quality thresholds.</p>
       </div>
     </div>
 
-    <div class="insight-box">
-      <strong>Interpretation &mdash;</strong>
-      Indonesian academic output in soon-to-be-discontinued journals grew rapidly from <strong>1,740 papers in 2015</strong>
-      to a peak of <strong>12,127 in 2020</strong>, before collapsing 62% in 2021 as Scopus enacted its largest
-      discontinuation wave. The trend reflects the impact of predatory and low-quality journal publishing on Indonesian
-      research visibility: papers in discontinued journals are effectively removed from the Scopus citation ecosystem.
+    <!-- ── METHODOLOGY ────────────────────────────────────────────── -->
+    <div class="method-box">
+      <strong>Data &amp; Methodology</strong>
+      <ul>
+        <li>Journal list: <em>Scopus Source List May 2026</em> — "Discontinued Titles" sheet (1,142 journals)</li>
+        <li>Query: <code>AFFILCOUNTRY({country}) AND SOURCE-ID({id1} OR {id2} OR …) AND PUBYEAR = {year}</code></li>
+        <li>API: Scopus Search API (Elsevier) · Fetched June 2026 · Batched in groups of 100 source IDs</li>
+        <li>Benchmark countries: Malaysia, Thailand, India, Vietnam — same source ID list applied</li>
+        <li>Share of output denominators: approximate annual Scopus country totals</li>
+      </ul>
     </div>
 
     <footer>
-      Data: Scopus Search API (Elsevier) &bull; Query: <code>AFFILCOUNTRY(Indonesia) AND SOURCE-ID(&hellip;) AND PUBYEAR = &hellip;</code> &bull;
-      Fetched June 2026 &bull; <a href="https://dev.elsevier.com" target="_blank">dev.elsevier.com</a>
+      Data: <strong>Scopus Search API</strong> (Elsevier) &bull;
+      Source list: Scopus May 2026 &bull;
+      <a href="https://dev.elsevier.com" target="_blank">dev.elsevier.com</a> &bull;
+      Dashboard: <a href="https://github.com/anshory1972/scopus" target="_blank">github.com/anshory1972/scopus</a>
     </footer>
-  </div>
+
+  </div><!-- /page -->
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
